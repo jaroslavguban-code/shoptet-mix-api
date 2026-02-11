@@ -83,19 +83,20 @@ app.post("/mix-coupon", async (req, res) => {
 
     const code = genCode();
 
-    await apiPost("/discount-coupons", {
-      data: {
-        coupons: [{
-          code,
-          discountType: "fixed",
-          amount: money(totalDiscount),
-          currency: "CZK",
-          template: TEMPLATE,
-          reusable: false,
-          remark: `MIX promo=${promoCode || "-"}; box=${boxCount}; subtotal=${cartSubtotal}`
-        }]
-      }
-    });
+   await apiPost("/discount-coupons", {
+  data: {
+    coupons: [{
+      code,
+      discountType: "fixed",
+      amount: money(totalDiscount),
+      currency: "CZK",
+      template: TEMPLATE,
+      shippingPrice: "cart",  
+      reusable: false,
+      remark: `MIX promo=${promoCode || "-"}; box=${boxCount}; subtotal=${cartSubtotal}`
+    }]
+  }
+});
 
     res.json({ code });
   } catch (e) {
